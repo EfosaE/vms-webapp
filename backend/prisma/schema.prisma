@@ -12,3 +12,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+model User {
+  id        String   @id @default(uuid()) // Unique identifier
+  name      String
+  email     String   @unique // Ensures email is unique
+  password  String   // Hashed password storage
+  role      Role     @default(USER) // Role-based access control
+  createdAt DateTime @default(now()) // Timestamp when user was created
+  updatedAt DateTime @updatedAt // Auto-updates on record changes
+
+  @@map("users") // Maps the model to the 'users' table in the DB
+}
+
+model Vehicle {
+  id                String   @id @default(cuid())
+  brand             String
+  model             String
+  serialNumber      String   @unique
+  agencyAssigned    String
+  yearAssigned      Int
+  location          String
+  lastOverhaul      DateTime
+  nextOverhaul      DateTime
+  lastMaintenance   DateTime
+  nextMaintenance   DateTime
+  unscheduledMaint  Boolean
+  trackerStatus     String
+  serviceability    Boolean
+
+  @@map("vehicles") // Ensures Prisma uses 'vehicles' as the table name
+}

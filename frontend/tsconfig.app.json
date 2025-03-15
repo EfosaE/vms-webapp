@@ -15,7 +15,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
     // Ensure TypeScript recognizes workspace packages
+    "baseUrl": "./",
     "paths": {
+      "@/*": ["src/*"],
       "@myorg/*": ["../packages/*"]
     },
 
