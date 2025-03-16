@@ -1,5 +1,5 @@
-export type User = {
-    id: number;
+export type UserWithPassword = {
+    password: string;
     name: string;
     email: string;
   };

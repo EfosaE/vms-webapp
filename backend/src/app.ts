@@ -2,20 +2,22 @@ import express from "express";
 import authRouter from "./routes/auth.route";
 import AppError from "./utils/appError";
 import prisma from "./utils/db";
+import globalErrorHandler from "./controllers/error.controller";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Hello from Express + TypeScript!");
 });
 
-app.use("/api/v1/auth/login", authRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`cant find api path ${req.originalUrl}`, 404));
 });
-
+// Global error handling middleware
+app.use(globalErrorHandler)
 async function main() {
   try {
     await prisma.$connect();
