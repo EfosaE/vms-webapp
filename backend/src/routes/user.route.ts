@@ -1,11 +1,9 @@
-import { Router } from 'express';
-import { login, signUp } from '../controllers/auth.controller';
+import { Router } from "express";
+import { getUserProfile } from "../controllers/user.controller";
+import authMiddleware from "../middlewares/auth.middleware";
 
+const userRouter = Router();
 
+userRouter.route("/profile").get(authMiddleware, getUserProfile);
 
-const authRouter = Router();
-
-authRouter.route('/signup').post(signUp);
-authRouter.route('/login').post(login);
-
-export default authRouter;
+export default userRouter;

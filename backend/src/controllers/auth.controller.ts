@@ -9,6 +9,7 @@ import {
 } from "../services/users.service";
 import { IUserWithPassword } from "types";
 import catchAsync from "../utils/catchAsync";
+import { env } from "../constants";
 
 const signUp = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -46,7 +47,7 @@ const login = catchAsync(
 
     const accessToken = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.JWT_SECRET as string,
+      env.JWT_SECRET as string,
       {
         expiresIn: "7d",
       }

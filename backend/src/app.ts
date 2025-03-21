@@ -3,6 +3,7 @@ import authRouter from "./routes/auth.route";
 import AppError from "./utils/appError";
 import prisma from "./utils/db";
 import globalErrorHandler from "./controllers/error.controller";
+import userRouter from "./routes/user.route";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users",  userRouter);
 
 app.all("*", (req, res, next) => {
   next(new AppError(`cant find api path ${req.originalUrl}`, 404));
