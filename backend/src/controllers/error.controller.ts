@@ -28,7 +28,7 @@ const handlePrismaError = (err: any) => {
 
 const sendErrorDev = (err: any, req: Request, res: Response) => {
   if (req.originalUrl.startsWith('/api')) {
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
       status: err.status,
       error: err,
       message: err.message,
@@ -54,19 +54,22 @@ const sendErrorProd = (err: any, req: Request, res: Response) => {
     //programming errors dont leak details
     console.error('ERROR 💥', err);
 
-    return res.status(500).json({
+    res.status(500).json({
       status: ' error',
       message: 'somethin went wrong, please try again later',
     });
+    
   }
 };
+
 
 const globalErrorHandler = (
   err: any,
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
+  console.log('error handler called',process.env.NODE_ENV)
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
   console.log(err);

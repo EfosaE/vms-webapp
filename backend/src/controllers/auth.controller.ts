@@ -7,13 +7,13 @@ import {
   createUser,
   validatePassword,
 } from "../services/users.service";
-import { UserWithPassword } from "types";
+import { IUserWithPassword } from "types";
 import catchAsync from "../utils/catchAsync";
 
 const signUp = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log(req.body);
-    const { email, password, name } = req.body as UserWithPassword;
+    const { email, password, name } = req.body as IUserWithPassword;
 
     if (!email || !password) {
       return next(new AppError("Email and password are required", 400));
@@ -28,7 +28,7 @@ const signUp = catchAsync(
 
 const login = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body as UserWithPassword;
+    const { email, password } = req.body as IUserWithPassword;
 
     if (!email || !password) {
       return next(new AppError("Email and password are required", 400));
@@ -44,15 +44,15 @@ const login = catchAsync(
       return next(new AppError("Invalid email or password", 401));
     }
 
-    // const token = jwt.sign(
-    //   { id: user.id, email: user.email },
-    //   process.env.JWT_SECRET as string,
-    //   {
-    //     expiresIn: "7d",
-    //   }
-    // );
+    const accessToken = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "7d",
+      }
+    );
 
-    return res.json({ message: "Login successful", user: {name:user.name, email: user.email } });
+    return res.json({accessToken});
   }
 );
 

@@ -5,13 +5,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "build": "pnpm -r run build",
-  "dev": "pnpm --parallel run dev",
-  "lint": "pnpm -r run lint",
-  "clean": "rm -rf .parcel-cache && pnpm -r run clean"
-} ,
+    "build": "pnpm -r run build",
+    "dev": "pnpm --parallel run dev",
+    "lint": "pnpm -r run lint",
+    "clean": "rm -rf .parcel-cache && pnpm -r run clean"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.6.3"
+  "packageManager": "pnpm@10.6.4"
 }

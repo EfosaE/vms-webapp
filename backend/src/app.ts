@@ -18,6 +18,7 @@ app.all("*", (req, res, next) => {
 });
 // Global error handling middleware
 app.use(globalErrorHandler)
+
 async function main() {
   try {
     await prisma.$connect();
